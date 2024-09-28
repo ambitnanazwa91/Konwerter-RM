@@ -30,7 +30,7 @@ const finalNumber = () => {
 		final.textContent = `Twój czas do wbicia w tym zadaniu to: ${finalValue.toFixed(2)}`
 		input.value = ''
 		const newItemList = document.createElement('p')
-		newItemList.textContent = `${nowDate.getHours()}:${nowDate.getMinutes()}
+		newItemList.textContent = `O ${nowDate.getHours()}:${nowDate.getMinutes()}
  wbiłaś w ${project} ${finalValue.toFixed(2)} godziny.`
 		list.appendChild(newItemList)
 		summaryHours = oldHours + finalValue
