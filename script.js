@@ -20,7 +20,9 @@ const finalNumber = () => {
 	checkedCount = 0
 	checkBoxes()
 	console.log(project)
-	if (checkedCount === 0) {
+	if ((input.value === '')) {
+		final.textContent = 'Wpisz wartość w minutach!'
+	} else if (checkedCount === 0) {
 		final.textContent = 'Wybierz projekt!'
 	} else if (checkedCount > 1) {
 		final.textContent = 'Głuptasie wybrałaś więcej niż jeden projekt!'
