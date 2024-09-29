@@ -10,6 +10,9 @@ const AICheck = document.querySelector('#AI')
 const allCheck = document.querySelectorAll('.checkB')
 const summaryWindow = document.querySelector('.summary-window')
 const summary = document.querySelector('.hour-summary')
+const bar = document.querySelector('.line')
+const gLine = document.querySelector('.line-g')
+const sumValue = document.querySelector('#sum-value')
 let finalValue
 let checkedCount = 0
 let project
@@ -20,7 +23,7 @@ const finalNumber = () => {
 	checkedCount = 0
 	checkBoxes()
 	console.log(project)
-	if ((input.value === '')) {
+	if (input.value === '') {
 		final.textContent = 'Wpisz wartość w minutach!'
 	} else if (checkedCount === 0) {
 		final.textContent = 'Wybierz projekt!'
@@ -39,7 +42,9 @@ const finalNumber = () => {
 		console.log(summaryHours)
 		oldHours = summaryHours
 		checkSummary()
-		summary.textContent = `W sumie przepracowałaś dziś: ${summaryHours.toFixed(2)} godzin.`
+		sumValue.textContent = ` ${summaryHours} h.`
+		checkBar()
+		console.log(summaryHours)
 	}
 }
 
@@ -56,6 +61,24 @@ const checkBoxes = () => {
 const checkSummary = () => {
 	if (summaryHours > 0) {
 		summaryWindow.classList.add('active')
+	}
+}
+
+const checkBar = () => {
+	if (summaryHours > 0 && summaryHours < 5.0) {
+		bar.classList.add('line-r')
+	} else if (summaryHours >= 5.0 && summaryHours < 6.5) {
+		bar.classList.remove('line-r')
+		bar.classList.add('line-y')
+	} else if (summaryHours >= 6.5 && summaryHours < 8.0) {
+		bar.classList.remove('line-r')
+		bar.classList.remove('line-y')
+		bar.classList.add('line-g')
+	} else {
+		bar.classList.remove('line-r')
+		bar.classList.remove('line-y')
+		bar.classList.remove('line-g')
+		bar.classList.add('line-b')
 	}
 }
 

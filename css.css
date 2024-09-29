@@ -1,7 +1,6 @@
 body {
 	background-color: #c5302b;
 	color: white;
-
 }
 
 .container {
@@ -24,6 +23,7 @@ body {
 	flex-direction: column;
 	background-color: rgb(253, 253, 253);
 	width: 90%;
+	min-width: 330px;
 	max-width: 100%;
 	min-height: 250px;
 	border: 2px solid #8d5e5b;
@@ -31,7 +31,7 @@ body {
 }
 
 .summary-window {
-	display: none;
+	/* display: none; */
 	background-color: rgb(232, 240, 237);
 	color: black;
 	border: 5px solid;
@@ -74,6 +74,21 @@ body {
 
 .project-list {
 	color: black;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.success-bar {
+	width: 65%;
+	align-content: center;
+}
+
+.sum-h {
+	font-size: small;
 }
 
 ul {
@@ -121,6 +136,53 @@ input:focus {
 	left: 5px;
 }
 
+.box {
+	width: 95%;
+	height: 10px;
+	border: 1px solid black;
+	border-radius: 10px 10px 10px 10px;
+}
+
+.success-bar {
+	padding: 10px;
+}
+
+.line {
+	width: 0%;
+}
+
+.line-g {
+	width: 75%;
+	height: 10px;
+	background-color: green;
+	border-radius: 10px 10px 10px 10px;
+	transition: width 0.5s;
+}
+
+.line-r {
+	width: 25%;
+	height: 10px;
+	background-color: rgb(235, 4, 4);
+	border-radius: 10px 10px 10px 10px;
+	transition: width 0.5s;
+}
+
+.line-y {
+	width: 50%;
+	height: 10px;
+	background-color: rgb(255, 166, 0);
+	border-radius: 10px 10px 10px 10px;
+	transition: width 0.5s;
+}
+
+.line-b {
+	width: 100%;
+	height: 10px;
+	background-color: rgb(0, 81, 255);
+	border-radius: 10px 10px 10px 10px;
+	transition: width 1s;
+}
+
 @media (min-width: 768px) {
 	.main-window {
 		width: 70%;
@@ -129,7 +191,6 @@ input:focus {
 		min-height: 250px;
 	}
 
-
 	.final {
 		font-size: large;
 		color: #352e26;
@@ -137,5 +198,14 @@ input:focus {
 
 	.button-54 {
 		padding: 0.25em 0.75em;
+	}
+
+
+	.success-bar {
+		width: 75%;
+	}
+
+	.sum-h {
+		font-size: normal;
 	}
 }
