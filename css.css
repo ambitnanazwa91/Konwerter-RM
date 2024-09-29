@@ -206,6 +206,7 @@ input:focus {
 	}
 
 	.sum-h {
-		font-size: normal;
+		font-size: large;
+		width: 25%;
 	}
 }
