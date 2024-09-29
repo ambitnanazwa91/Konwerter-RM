@@ -13,11 +13,15 @@ const summary = document.querySelector('.hour-summary')
 const bar = document.querySelector('.line')
 const gLine = document.querySelector('.line-g')
 const sumValue = document.querySelector('#sum-value')
+const percentScore = document.querySelector('.percentScore')
+const sixH = 6.5
+const eightH = 8
 let finalValue
 let checkedCount = 0
 let project
 let oldHours = 0
 let summaryHours
+let precentValue
 
 const finalNumber = () => {
 	checkedCount = 0
@@ -42,8 +46,10 @@ const finalNumber = () => {
 		console.log(summaryHours)
 		oldHours = summaryHours
 		checkSummary()
-		sumValue.textContent = ` ${summaryHours} h.`
-		checkBar()
+		sumValue.textContent = ` ${summaryHours.toFixed(2)} h.`
+		// checkBar()
+		precent()
+		precentBar()
 		console.log(summaryHours)
 	}
 }
@@ -64,21 +70,51 @@ const checkSummary = () => {
 	}
 }
 
-const checkBar = () => {
-	if (summaryHours > 0 && summaryHours < 5.0) {
+// const checkBar = () => {
+// 	if (summaryHours > 0 && summaryHours < 5.0) {
+// 		bar.classList.add('line-r')
+// 	} else if (summaryHours >= 5.0 && summaryHours < 6.5) {
+// 		bar.classList.remove('line-r')
+// 		bar.classList.add('line-y')
+// 	} else if (summaryHours >= 6.5 && summaryHours < 8.0) {
+// 		bar.classList.remove('line-r')
+// 		bar.classList.remove('line-y')
+// 		bar.classList.add('line-g')
+// 	} else {
+// 		bar.classList.remove('line-r')
+// 		bar.classList.remove('line-y')
+// 		bar.classList.remove('line-g')
+// 		bar.classList.add('line-b')
+// 	}
+// }
+
+const precentBar = () => {
+	if (precentValue > 0 && precentValue < 30) {
 		bar.classList.add('line-r')
-	} else if (summaryHours >= 5.0 && summaryHours < 6.5) {
-		bar.classList.remove('line-r')
+		bar.style.width = precentValue + '%'
+	} else if (precentValue >= 30 && summaryHours < 6.5) {
 		bar.classList.add('line-y')
-	} else if (summaryHours >= 6.5 && summaryHours < 8.0) {
-		bar.classList.remove('line-r')
-		bar.classList.remove('line-y')
+		bar.style.width = precentValue + '%'
+	} else if (summaryHours >= 6.5 && precentValue < 100) {
 		bar.classList.add('line-g')
-	} else {
-		bar.classList.remove('line-r')
-		bar.classList.remove('line-y')
-		bar.classList.remove('line-g')
+		bar.style.width = precentValue + '%'
+	} else if (summaryHours > 8 && precentValue >= 100) {
 		bar.classList.add('line-b')
+		bar.style.width = '100%'
+	}
+}
+
+const precent = () => {
+	if (summaryHours < 6.5) {
+		precentValue = (summaryHours / sixH) * 100
+		precentValue = Math.floor(precentValue)
+		console.log(precentValue)
+		percentScore.textContent = `${precentValue}%`
+	} else {
+		precentValue = (summaryHours / eightH) * 100
+		precentValue = Math.floor(precentValue)
+		console.log(precentValue)
+		percentScore.textContent = `${precentValue}%`
 	}
 }
 
