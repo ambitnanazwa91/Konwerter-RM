@@ -50,6 +50,7 @@ const finalNumber = () => {
 		// checkBar()
 		precent()
 		precentBar()
+		clearChB()
 		console.log(summaryHours)
 	}
 }
@@ -116,6 +117,26 @@ const precent = () => {
 		console.log(precentValue)
 		percentScore.textContent = `${precentValue}%`
 	}
+}
+
+allCheck.forEach(function (checkB) {
+	checkB.addEventListener('change', function () {
+		// Jeśli checkbox został zaznaczony
+		if (this.checked) {
+			// Odznaczenie innych checkboxów
+			allCheck.forEach(function (otherCheckbox) {
+				if (otherCheckbox !== checkB) {
+					otherCheckbox.checked = false
+				}
+			})
+		}
+	})
+})
+
+const clearChB = () => {
+	allCheck.forEach(box => {
+		box.checked = false
+	})
 }
 
 btn.addEventListener('click', finalNumber)
