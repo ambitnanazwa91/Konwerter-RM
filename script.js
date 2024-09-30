@@ -16,6 +16,8 @@ const sumValue = document.querySelector('#sum-value')
 const percentScore = document.querySelector('.percentScore')
 const sixH = 6.5
 const eightH = 8
+const regex = /[\d,.]+/g
+let extractedValue
 let finalValue
 let checkedCount = 0
 let project
@@ -38,16 +40,15 @@ const finalNumber = () => {
 		finalValue = input.value / 60
 		final.textContent = `Twój czas do wbicia w tym zadaniu to: ${finalValue.toFixed(2)}`
 		input.value = ''
-		const newItemList = document.createElement('p')
-		newItemList.textContent = `O ${nowDate.getHours()}:${nowDate.getMinutes()}
- wbiłaś w ${project} ${finalValue.toFixed(2)} godziny.`
-		list.appendChild(newItemList)
-		summaryHours = oldHours + finalValue
-		console.log(summaryHours)
+
+		addItem()
+		// summaryHours = oldHours + finalValue
+		addSummarySum()
+
+		
 		oldHours = summaryHours
 		checkSummary()
-		sumValue.textContent = ` ${summaryHours.toFixed(2)} h.`
-		// checkBar()
+		addSumValue()
 		precent()
 		precentBar()
 		clearChB()
@@ -68,29 +69,18 @@ const checkBoxes = () => {
 const checkSummary = () => {
 	if (summaryHours > 0) {
 		summaryWindow.classList.add('active')
+	} else {
+		summaryWindow.classList.remove('active')
 	}
 }
 
-// const checkBar = () => {
-// 	if (summaryHours > 0 && summaryHours < 5.0) {
-// 		bar.classList.add('line-r')
-// 	} else if (summaryHours >= 5.0 && summaryHours < 6.5) {
-// 		bar.classList.remove('line-r')
-// 		bar.classList.add('line-y')
-// 	} else if (summaryHours >= 6.5 && summaryHours < 8.0) {
-// 		bar.classList.remove('line-r')
-// 		bar.classList.remove('line-y')
-// 		bar.classList.add('line-g')
-// 	} else {
-// 		bar.classList.remove('line-r')
-// 		bar.classList.remove('line-y')
-// 		bar.classList.remove('line-g')
-// 		bar.classList.add('line-b')
-// 	}
-// }
+const addSummarySum = () => {
+	summaryHours = oldHours + finalValue
+	// summaryHours = summaryHours.toFixed(2);
+}
 
 const precentBar = () => {
-	if (precentValue > 0 && precentValue < 30) {
+	if (precentValue >= 0 && precentValue < 30) {
 		bar.classList.add('line-r')
 		bar.style.width = precentValue + '%'
 	} else if (precentValue >= 30 && summaryHours < 6.5) {
@@ -132,6 +122,85 @@ allCheck.forEach(function (checkB) {
 		}
 	})
 })
+
+// const addDelteBtn = () => {
+// 	const newDiv = document.createElement('div')
+// 	newDiv.classList.add('dynamicDiv')
+// 	const pInDiv = document.createElement('p')
+// 	pInDiv.classList.add('pInDivClass')
+// 	pInDiv.textContent = `O ${nowDate.getHours()}:${nowDate.getMinutes()}
+//  wbiłaś w ${project} ${finalValue.toFixed(2)} godziny.`
+// 	newDiv.appendChild(pInDiv)
+// 	list.appendChild(newDiv)
+// }
+
+const addItem = () => {
+	const newDiv = document.createElement('div')
+	newDiv.classList.add('dynamicDiv', 'flex-row-center')
+
+	const pInDiv = document.createElement('p') // Użyj document.createElement
+	pInDiv.classList.add('pInDivClass')
+	pInDiv.textContent = `O ${nowDate.getHours()}:${nowDate.getMinutes()} 
+    wbiłaś w ${project} ${finalValue.toFixed(2)} godziny.`
+
+	newDiv.appendChild(pInDiv) // Dodaj <p> do <div>
+
+	// Tworzymy button do  kosza
+	const trashIconBtn = document.createElement('button')
+	trashIconBtn.classList.add('p5', 'trashButton')
+
+	//Tworzymy ikone w buttonie
+	const trashIcon = document.createElement('i')
+	trashIcon.classList.add('p5', 'fa-solid', 'fa-trash')
+
+	// Dodajemy event listener do ikony kosza
+	trashIconBtn.addEventListener('click', e => removeDiv(e))
+
+	newDiv.appendChild(trashIconBtn) // Dodaj buttonm  do <div>
+	trashIconBtn.appendChild(trashIcon) // Dodaj icone do btn
+	list.appendChild(newDiv) // Dodaj nowy <div> do listy
+}
+
+// Funkcja do usuwania diva
+const removeDiv = e => {
+	e.stopPropagation() // Zatrzymaj propagację
+	const divToRemove = e.target.closest('.dynamicDiv') // Znajdź najbliższy <div>
+	if (divToRemove) {
+		divToRemove.remove() // Usuń <div>
+	}
+	getTime(e)
+	removeTime()
+	precent()
+	precentBar()
+	addSumValue()
+	checkSummary()
+}
+
+const getTime = e => {
+	const time = e.target
+	const btnTime = time.closest('button')
+	console.log(btnTime)
+	const pTime = btnTime.previousSibling
+	console.log(pTime)
+	const text = pTime.textContent
+	console.log(text)
+	const dynamicMatches = text.match(regex)
+	if (dynamicMatches && dynamicMatches.length >= 2) {
+		extractedValue = parseFloat(dynamicMatches[2].replace(',', '.'))
+		console.log(`Wyciągnięta wartość do usunięcia: ${extractedValue.toFixed(2)}`)
+	} else {
+		console.log('Nie znaleziono drugiej wartości.')
+	}
+}
+
+const removeTime = () => {
+	summaryHours = summaryHours.toFixed(2) - extractedValue.toFixed(2)
+	console.log(summaryHours)
+}
+
+const addSumValue = () => {
+	sumValue.textContent = ` ${summaryHours} h.`
+}
 
 const clearChB = () => {
 	allCheck.forEach(box => {
