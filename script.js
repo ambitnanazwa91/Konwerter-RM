@@ -40,19 +40,13 @@ const finalNumber = () => {
 		finalValue = input.value / 60
 		final.textContent = `Twój czas do wbicia w tym zadaniu to: ${finalValue.toFixed(2)}`
 		input.value = ''
-
 		addItem()
-		// summaryHours = oldHours + finalValue
 		addSummarySum()
-
-		
-		oldHours = summaryHours
 		checkSummary()
 		addSumValue()
 		precent()
 		precentBar()
 		clearChB()
-		console.log(summaryHours)
 	}
 }
 
@@ -76,20 +70,32 @@ const checkSummary = () => {
 
 const addSummarySum = () => {
 	summaryHours = oldHours + finalValue
+	oldHours = summaryHours
 	// summaryHours = summaryHours.toFixed(2);
 }
 
 const precentBar = () => {
 	if (precentValue >= 0 && precentValue < 30) {
+		bar.className = ''
+		bar.classList.add('list')
 		bar.classList.add('line-r')
 		bar.style.width = precentValue + '%'
 	} else if (precentValue >= 30 && summaryHours < 6.5) {
 		bar.classList.add('line-y')
+		bar.classList.remove('line-r')
+		bar.classList.remove('line-b')
 		bar.style.width = precentValue + '%'
 	} else if (summaryHours >= 6.5 && precentValue < 100) {
 		bar.classList.add('line-g')
+		bar.classList.remove('line-y')
+		bar.classList.remove('line-r')
+		bar.classList.remove('line-b')
 		bar.style.width = precentValue + '%'
 	} else if (summaryHours > 8 && precentValue >= 100) {
+		bar.classList.remove('line-g')
+		bar.classList.remove('line-y')
+		bar.classList.remove('line-r')
+		bar.classList.remove('line-b')
 		bar.classList.add('line-b')
 		bar.style.width = '100%'
 	}
@@ -99,7 +105,7 @@ const precent = () => {
 	if (summaryHours < 6.5) {
 		precentValue = (summaryHours / sixH) * 100
 		precentValue = Math.floor(precentValue)
-		console.log(precentValue)
+		console.log(`Wartość procentowa: ${precentValue}`)
 		percentScore.textContent = `${precentValue}%`
 	} else {
 		precentValue = (summaryHours / eightH) * 100
@@ -174,16 +180,17 @@ const removeDiv = e => {
 	precentBar()
 	addSumValue()
 	checkSummary()
+	console.log(oldHours)
 }
 
 const getTime = e => {
 	const time = e.target
 	const btnTime = time.closest('button')
-	console.log(btnTime)
+
 	const pTime = btnTime.previousSibling
-	console.log(pTime)
+
 	const text = pTime.textContent
-	console.log(text)
+
 	const dynamicMatches = text.match(regex)
 	if (dynamicMatches && dynamicMatches.length >= 2) {
 		extractedValue = parseFloat(dynamicMatches[2].replace(',', '.'))
@@ -195,11 +202,12 @@ const getTime = e => {
 
 const removeTime = () => {
 	summaryHours = summaryHours.toFixed(2) - extractedValue.toFixed(2)
-	console.log(summaryHours)
+	oldHours = oldHours.toFixed(2) - extractedValue.toFixed(2)
+	console.log(`To po usunięciu suma godzin ${summaryHours}`)
 }
 
 const addSumValue = () => {
-	sumValue.textContent = ` ${summaryHours} h.`
+	sumValue.textContent = ` ${summaryHours.toFixed(2)} h.`
 }
 
 const clearChB = () => {
