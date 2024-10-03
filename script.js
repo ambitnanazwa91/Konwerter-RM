@@ -1,4 +1,6 @@
+const mainWindow = document.querySelector('.main-window')
 const final = document.querySelector('.final')
+const finalP = document.querySelector('.final > p')
 const btn = document.querySelector('.button-54')
 const input = document.querySelector('#inputNumber')
 const nowDate = new Date()
@@ -14,9 +16,14 @@ const bar = document.querySelector('.line')
 const gLine = document.querySelector('.line-g')
 const sumValue = document.querySelector('#sum-value')
 const percentScore = document.querySelector('.percentScore')
+const arrowIcon = document.querySelector('.arrow-icon-div')
 const sixH = 6.5
 const eightH = 8
 const regex = /[\d,.]+/g
+const tab = document.querySelector('.tab')
+// const up = document.querySelector('.up')
+const down = document.querySelector('.down')
+let up
 let extractedValue
 let finalValue
 let checkedCount = 0
@@ -30,19 +37,19 @@ const finalNumber = () => {
 	checkBoxes()
 	console.log(project)
 	if (input.value === '') {
-		final.textContent = 'Wpisz wartość w minutach!'
+		finalP.textContent = 'Wpisz wartość w minutach!'
 	} else if (checkedCount === 0) {
-		final.textContent = 'Wybierz projekt!'
+		finalP.textContent = 'Wybierz projekt!'
 	} else if (checkedCount > 1) {
-		final.textContent = 'Głuptasie wybrałaś więcej niż jeden projekt!'
+		finalP.textContent = 'Głuptasie wybrałaś więcej niż jeden projekt!'
 	} else {
-		final.textContent = ''
+		// final.textContent = ''
 		finalValue = input.value / 60
-		final.textContent = `Twój czas do wbicia w tym zadaniu to: ${finalValue.toFixed(2)}`
+		finalP.textContent = `Twój czas do wbicia w tym zadaniu to: ${finalValue.toFixed(2)}`
 		input.value = ''
 		addItem()
 		addSummarySum()
-		checkSummary()
+		// checkSummary()
 		addSumValue()
 		precent()
 		precentBar()
@@ -60,13 +67,13 @@ const checkBoxes = () => {
 	})
 }
 
-const checkSummary = () => {
-	if (summaryHours > 0) {
-		summaryWindow.classList.add('active')
-	} else {
-		summaryWindow.classList.remove('active')
-	}
-}
+// const checkSummary = () => {
+// 	if (summaryHours > 0) {
+// 		summaryWindow.classList.add('active')
+// 	} else {
+// 		summaryWindow.classList.remove('active')
+// 	}
+// }
 
 const addSummarySum = () => {
 	summaryHours = oldHours + finalValue
@@ -216,4 +223,33 @@ const clearChB = () => {
 	})
 }
 
+const rotateIcon = () => {
+	{
+		tab.classList.toggle('up')
+		tab.classList.toggle('down')
+		arrowIcon.classList.toggle('rotate-icon')
+	}
+}
+const activeSecondTab = () => {
+	rotateIcon()
+	opacity()
+}
+
+const opacity = () => {
+	mainWindow.classList.toggle('main-window-expand')
+	summaryWindow.classList.toggle('active')
+
+	setTimeout(() => {
+		summaryWindow.classList.toggle('opacityOne') // Usunięcie klasy po upływie 1 sekundy
+	}, 100)
+}
+
+// const TabOption = () => {
+// 	if (tab.classList.contains('up')) {
+// 		activeSecondTab()
+// 	}
+// }
+
 btn.addEventListener('click', finalNumber)
+tab.addEventListener('click', activeSecondTab)
+// tab.addEventListener('click', TabOption)
