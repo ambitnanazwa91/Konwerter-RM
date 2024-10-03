@@ -15,6 +15,7 @@ const summary = document.querySelector('.hour-summary')
 const bar = document.querySelector('.line')
 const gLine = document.querySelector('.line-g')
 const sumValue = document.querySelector('#sum-value')
+const totalHup = document.querySelector('.totalH')
 const percentScore = document.querySelector('.percentScore')
 const arrowIcon = document.querySelector('.arrow-icon-div')
 const sixH = 6.5
@@ -215,6 +216,7 @@ const removeTime = () => {
 
 const addSumValue = () => {
 	sumValue.textContent = ` ${summaryHours.toFixed(2)} h.`
+	totalHup.textContent = `Dziś: ${summaryHours.toFixed(2)} h.`
 }
 
 const clearChB = () => {
